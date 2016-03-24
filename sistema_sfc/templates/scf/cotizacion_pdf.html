@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+  {% load staticfiles %}
+  {% block extracss %}
+   
+  {% endblock extracss %}
+
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <a href="" role="button" class="btn btn-default"><i class="fa fa-chevron-circle-left"></i> Regresar </a>
+    <a href="" role="button" class="btn btn-primary"><i class="fa fa-download"></i> Generar PDF</a>
+  </div>
+</div><br><br>
+
+{% endblock content %}
+
+{% block extrajs %}
+  <script type="text/javascript" src="{% static '/static/js/demo.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/custom.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/jquery.form.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/demo.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/custom.js' %}"></script>
+{% endblock extrajs %}

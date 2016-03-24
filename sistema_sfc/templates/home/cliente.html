@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+  {% load staticfiles %}
+  {% block extracss %}
+    
+    <!-- Bootstrap 3.3.5 -->
+    
+  {% endblock extracss %}
+
+
+{% block content %}
+
+
+
+<div id="Modal" class="modal fade" tabindex="-1" role"dialog" aria-labeledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="myModalLabel"> Eliminar Cliente </h3>
+      </div>
+
+      <div class="modal-body">
+       <p>¿Realmente desea eliminar el cliente <span id="modal_name"></span>?</p>
+      </div>
+
+      <div class="modal-footer">
+        <form method="post" id="frmEliminar"> {% csrf_token %}          
+          <input type="hidden" id="modal_id" name="input_id">
+          <button class="btn" data-dismiss="modal" aria-hidden="true"> Cerrar </button>
+          <button type="submit" class="btn btn-danger"> Eliminar </button> 
+        </form> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<a href="{% url 'vista_agregar_cliente' %}" role="button" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Nuevo Cliente</a> <br><br>
+
+<div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title"> Listado de Clientes </h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <table id="example" class="table table-bordered table-striped dt-responsive nowrap">
+            <thead>
+              <tr>
+                <th>Rif</th>
+                <th>Nombre</th>
+                <th>Telefono</th>
+                <th>Correo electronico</th>
+                <th>Dirección</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in resultado %}
+                <tr id="{{item.id}}">
+                  <td>{{ item.rif }}</td>
+                  <td>{{ item.nombre }}</td>
+                  <td>{{ item.telefono }}</td>
+                  <td>{{ item.correo }}</td>
+                  <td>{{ item.direccion }}</td>
+                  <td><a href="/edit/cliente/{{item.id}}/" class="btn btn-warning" > <i class="fa fa-pencil-square-o"></i></a>
+                  <a href="#Modal" role="button" class="btn btn-danger delete" data-toggle="modal" id="{{item.id}}" data-name="{{item.nombre}}"><i class="fa fa-trash"></i></a></td>
+          
+                </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock content %}
+
+{% block extrajs %}
+  <script type="text/javascript" src="{% static '/static/js/demo.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/custom.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/jquery.form.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/dataTables.responsive.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/dataTables.tableTools.js' %}"></script>
+{% endblock extrajs %}

@@ -1,0 +1,144 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <title>Sistema de Cotización y Facturación</title>
+
+    {% load staticfiles %}
+    <link rel='stylesheet' type='text/css'href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/png" href="{% static '/static/images/img.png' %}" />
+
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=PT+Serif'>
+    <link rel="stylesheet" type="text/css" href="{% static '/static/css/css.css' %}">
+    <link rel='stylesheet' type='text/css' href="{% static '/static/bootstrap/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static '/static/dist/css/AdminLTE.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static '/static/dist/css/skins/_all-skins.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static '/static/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static '/static/plugins/datatables/dataTables.bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/static/css/dataTables.responsive.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/static/css/dataTables.tableTools.css' %}"> 
+    {% block extracss %} {% endblock extracss %}
+  </head>
+
+  <body class="skin-blue sidebar-mini">
+  	<div class="wrapper">
+
+      <header class="main-header">
+        <!-- Logo -->
+        <a href="{% url 'index_view' %}" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini"><b>D</b>2G</span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg"><b>Diseña2</b>Guayana</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+          <!-- Sidebar toggle button-->
+          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+          </a>
+          {% if user.is_authenticated %}
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ request.user.username }} <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{% url 'logout' %}?next=/">Cerrar sesion</a></li>
+              </ul>
+            </li>
+          {% endif %}
+      </ul>
+         
+        </nav>
+      </header>
+      {% if user.is_authenticated %}
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+         <!-- sidebar menu: : style can be found in sidebar.less -->
+          <ul class="sidebar-menu">
+            
+            <li class="active treeview">
+              <a href="{% url 'index_view' %}">
+                <i class="fa fa-dashboard"></i> <span>Inicio</span> <i class="fa fa-angle-left pull-right"></i>
+              </a>
+            </li>
+
+            <li class="treeview">
+              <a href="{% url 'cliente' %}">
+                <i class="fa fa-user"></i>
+                <span>Cliente</span>
+                <i class="fa fa-angle-left pull-right"></i> 
+              </a>
+            </li>
+
+            <li class="treeview">
+              <a href="{% url 'producto' %}">
+                <i class="fa fa-barcode"></i> <span>Producto</span>
+                <i class="fa fa-angle-left pull-right"></i> 
+              </a>
+            </li>
+
+            <li class="treeview">
+              <a href="{% url 'cotizacion' %}">
+                <i class="fa fa-file-text-o"></i>
+                <span>Cotización</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+            </li>
+
+            <li class="treeview">
+              <a href="{% url 'facturacion' %}">
+                <i class="fa fa-file-text"></i>
+                <span>Factura</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+            </li>
+
+            <li class="treeview">
+              <a href="{% url 'prospecto' %}">
+                <i class="fa fa-star"></i> <span>Prospecto</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+            </li>
+
+            <li class="treeview">
+              <a href="{% url 'observacion' %}">
+                <i class="fa fa-eye"></i> <span>Observaciones</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+            </li>
+          </ul>
+        </section>
+        <!-- /.sidebar -->
+      </aside>
+      {% endif %}
+      <!-- Content Wrapper. Contains page content -->
+     <aside class = "right-side">
+      <section class="content">
+   		{% block content %} {% endblock content %}
+    
+      </aside><!-- /.content-wrapper -->
+      
+      <footer class="main-footer">
+        <strong>Copyright &copy; 2015-2016 <a href="">Diseña2Guayana</a>.</strong> All rights reserved.
+      </footer>
+
+      
+      <div class="control-sidebar-bg"></div>
+    </div><!-- ./wrapper -->  
+  </body>
+
+  <script type="text/javascript" src="{% static '/static/plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/dist/js/demo.js' %}"></script>
+  <script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="{% static '/static/dist/js/app.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/plugins/slimScroll/jquery.slimscroll.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/plugins/fastclick/fastclick.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/bootstrap/js/bootstrap.min.js' %}"></script>    
+  {% block extrajs %} {% endblock extrajs %}
+
+</html>

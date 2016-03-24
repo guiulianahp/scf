@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+  {% load staticfiles %}
+  {% block extracss %}
+   
+  {% endblock extracss %}
+
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <a href="{% url 'facturacion' %}" role="button" class="btn btn-default"><i class="fa fa-chevron-circle-left"></i> Regresar </a>
+    <a href="/pdf/factura/{{factura.id}}/" role="button" class="btn btn-primary"><i class="fa fa-download"></i> Generar PDF</a>
+  </div>
+</div><br><br>
+
+<div class="box">
+  
+  <div class="box-body" ><h3 id="id_factura">Factura #{{ factura.id}}</h3><h5>Fecha: {{ factura.fecha}} - Cotización #{{ cotizacion.id}}</h5></div>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box-body">
+        <table id="informacion_cliente" class="table table-bordered table-striped dt-responsive nowrap">
+          <tr>
+            <th>Nombre del Cliente:</th>
+            <td>{{cliente.nombre}}</td>
+          </tr>
+          <tr>
+            <th>Rif:</th>
+            <td>{{cliente.rif}}</td>
+          </tr>
+          <tr>
+            <th>Email:</th>
+            <td>{{cliente.correo}}</td>
+          </tr>
+          <tr>
+            <th>Teléfono:</th>
+            <td>{{cliente.telefono}}</td>
+          </tr>
+          <tr>
+            <th>Dirección:</th>
+            <td>{{cliente.direccion}}</td>
+          </tr>
+        </table>
+      </div>     
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box-body">
+        <table id="factura_preview" class="table table-bordered table-striped dt-responsive nowrap">
+          <thead>
+            <tr>
+              <th style="width: 10px">#</th>
+              <th>Producto</th>
+              <th>Talla</th>
+              <th>Cantidad</th>
+              <th>Ganancia</th>
+              <th>Precio Unitario</th>
+              <th>Precio Total</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for item in tabla %}
+            <tr id="{{item.id}}">
+                <td>{{ item.id}}</td>
+                <td>{{ item.descripcion}}</td>
+                <td>{{ item.talla}}</td>
+                <td>{{ item.cantidad}}</td>
+                <td>{{ item.ganancia}}</td>
+                <td>{{ item.precio_unitario}}</td>
+                <td>{{ item.precio_total}}</td>
+            </tr>    
+            {% endfor %}
+            <tr><td></td><td></td><td></td><td></td><td></td><th>Total Final</th><td style="float:right">{{total}}</td></tr>
+        
+          </tbody>
+        </table>
+      </div>     
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+
+{% block extrajs %}
+  <script type="text/javascript" src="{% static '/static/js/demo.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/custom.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/jquery.form.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/demo.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/custom.js' %}"></script>
+{% endblock extrajs %}

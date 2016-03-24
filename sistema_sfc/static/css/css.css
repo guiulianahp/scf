@@ -1,0 +1,73 @@
+body{
+	background: #fff;
+  	color:#4e4e4e;
+  	line-height: 22px;
+}
+
+.page-header h1{
+	background-color: transparent;
+	padding: 0px 0px 25px 15px;
+	font-family: 'PT Serif', serif;
+	font-weight: bold;
+	font-size: 50px;
+	color: #fff;
+	}
+
+.page-header h3{
+	background-color: transparent;
+	margin: 10px 0px 10px 15px;
+	font-family: 'PT Serif', serif;
+	font-size: 25px;}
+.leyenda h3{
+	float: left;
+	font-family: 'PT Serif', serif;
+	margin: 15px 5px 0px 20px;
+	color: #ccc;
+	font-size: 22px;
+}
+td.details-control {
+    background: url('../resources/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.details td.details-control {
+    background: url('../resources/details_close.png') no-repeat center center;
+}
+
+#example th, #example{
+	text-align: center;
+}
+
+span:before{
+	 outline: none;
+	 display:inline-block;
+}
+#example_wrapper{
+	margin-top: 20px;
+}
+#list_product input { width:5px }
+.dataTables_empty {
+  display:none;
+}
+
+#rif_client, #email_client, #telefono_client{
+	float: right;
+	margin: 5px 5px 5px 5px;
+}
+
+
+#text_id_cotizacion{
+	float:left;
+	font-size: 20px;
+}
+
+#div_id_factura{
+	float:right;
+}
+
+#text_id_factura{
+	font-size: 20px;
+}
+
+#div_total, #boton_cotizacion {
+	float: right;
+} 

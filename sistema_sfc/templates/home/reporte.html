@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Apply any bg-* class to to the info-box to color it -->
+<div class="row">
+  <div class="col-md-6">
+    <a href=""><div class="info-box bg-red">
+      <span class="info-box-icon"><i style="padding-top:15px;" class="fa fa-users"></i></span>
+      <div class="info-box-content">
+        <span style="padding-top:15px;" class="info-box-text">Clientes</span>
+        <span class="info-box-number">{{ len.total_cliente}}</span>
+      </div><!-- /.info-box-content -->
+    </div><!-- /.info-box --></a>
+  </div>
+  <div class="col-md-6">
+    <a href=""><div class="info-box bg-blue">
+      <span class="info-box-icon"><i style="padding-top:15px;" class="fa fa-barcode"></i></span>
+      <div class="info-box-content">
+        <span style="padding-top:15px;" class="info-box-text">Productos</span>
+        <span class="info-box-number">{{ len.total_producto}}</span>
+        </div><!-- /.info-box-content -->
+    </div><!-- /.info-box --></a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <a href="/cotizacion/"><div class="info-box bg-green">
+      <span class="info-box-icon"><i style="padding-top:15px;" class="fa fa-file-text-o"></i></span>
+      <div class="info-box-content">
+        <span style="padding-top:15px;" class="info-box-text">Cotizaciones</span>
+        <span class="info-box-number">{{ len.total_cotizacion}}</span>
+        
+      </div><!-- /.info-box-content -->
+    </div><!-- /.info-box --></a>
+  </div>
+  <div class="col-md-6">
+    <a href=""><div class="info-box bg-yellow">
+      <span class="info-box-icon"><i style="padding-top:15px;" class="fa fa-file-text"></i></span>
+      <div class="info-box-content">
+        <span style="padding-top:15px;" class="info-box-text">Facturas</span>
+        <span class="info-box-number">{{ len.total_factura}}</span>
+        
+      </div><!-- /.info-box-content -->
+    </div><!-- /.info-box --></a>
+  </div>
+</div>
+{% endblock content %}

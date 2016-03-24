@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+
+  {% load staticfiles %}
+  {% block extracss %}
+  <link rel="stylesheet" type="text/css" ref="{% static '/static/css/css.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static '/static/plugins/select2/select2.min.css' %}" >
+  {% endblock extracss %}
+
+{% block content %}
+
+<div id="Modal_client"  class="modal fade bs-example-modal-lg" tabindex="-1" role"dialog" aria-labeledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="myModalLabel"> Seleccionar Cliente </h3>
+      </div>
+
+      <div class="modal-body">
+        <table id="list_clients_modal" class="table table-bordered table-striped dt-responsive nowrap">
+          <thead>
+            <tr>
+              <th> # </th>
+              <th> Rif </th>
+              <th> Nombre </th>
+              <th> Teléfono </th>
+              <th> Correo </th>
+              <th> Acción </th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for item in clients %}
+            <tr id="{{item.id}}">
+                <td>{{ item.id}}</td>
+                <td>{{ item.rif}}</td>
+                <td>{{ item.nombre}}</td>
+                <td>{{ item.telefono}}</td>
+                <td>{{ item.correo}}</td>
+                <td><a href="#" onclick="getClientModal({{item.id}},'{{item.rif}}','{{item.nombre}}',{{item.telefono}},'{{item.correo}}')" role="button" class="btn btn-primary" ><i class="fa fa-check"></i></a></td>
+            </tr>    
+            {% endfor %}
+          </tbody>
+        </table>
+        <input type="hidden" id="id_cliente" value="">
+      </div>
+            
+
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true"> Cerrar </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="Modal_observaciones"  class="modal fade bs-example-modal-lg" tabindex="-1" role"dialog" aria-labeledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h3 id="myModalLabel"> Observaciones </h3>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+
+          <div class="col-md-6">
+            <div id="datosObservacion">
+              <label id="labelObservacion"> Observación Nro 1 </label>
+              <input type="text" id="inputObservacion" size="50">
+              <button type="button" role="button" class="btn btn-danger" id = "btnAgregarObservacion" onclick="llenar_tabla_observaciones();"> Crear</button>
+            <br>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label> Observaciones por Defecto </label><br>
+            <select class="js-example-basic-single" name="observaciones" id="select-observaciones" style="width: 100%;">
+            {% for item in observaciones %}
+              <option>{{item.descripcion}}</option>
+            {% endfor %}
+            </select>
+          </div>
+
+          <div class="col-md-12">
+            <table id="list_observaciones" class="table table-bordered table-striped dt-responsive nowrap" hidden>
+              <thead>
+                <tr>
+                  <th style="width:10%"> # </th>
+                  <th style="width:80%"> Observación </th>
+                  <th style="width:10%"> Acción </th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true"> Cerrar </button>
+        <button onclick = "guardar_observacion()" type="submit" class="btn btn-primary"> Guardar Observaciones </button> 
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-md-12" id="add_client">
+  <a href="{% url 'cotizacion' %}"role="button" class="btn btn-default"><i class="fa fa-chevron-circle-left"></i> Regresar </a>
+  <a href="#Modal_client" id="seleccion_cliente" role="button" data-toggle="modal" class="btn btn-primary"><i class="fa fa-user-plus"></i> Seleccionar Cliente </a>
+</div>
+<div class="col-md-12" id="edit_client" hidden>
+  <a href="{% url 'cotizacion' %}" role="button" class="btn btn-default"><i class="fa fa-chevron-circle-left"></i> Regresar </a>
+  <a href="#Modal_client" id="seleccion_cliente" role="button" data-toggle="modal" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Cambiar de Cliente </a>
+</div>
+<br><br>
+
+<div class="row" >
+  <div class="col-md-6" id="contendor_info_cliente" hidden>
+    <div class="box">
+      <div class="box-body">
+        <p class="lead" id = "nombre_client"> </p>
+        <table id="info_client" class="table table-bordered table-striped dt-responsive nowrap">
+          <tbody>
+          </tbody>
+        </table>
+        
+      </div>
+    </div>     
+  </div>
+  
+
+  <div class="col-md-6" style="float:right;" id="contenedor_productos" hidden>
+   {% csrf_token %} 
+    <div class="box">
+      <div class="box-header">
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <table id="list_product" class="table table-bordered table-striped dt-responsive nowrap">
+          <thead>
+            <tr>
+              <th> Producto </th>
+              <th> </th>
+            </tr>
+          </thead>
+          <tbody>
+          {% csrf_token %} 
+          {% for item in list_product %}
+            <tr id="{{item.id}}">
+                <td>{{ item.descripcion}}</td>
+                <td><a href="#" onclick="llenar_tabla({{item.id}},'{{item.descripcion}}',{{ item.precio_tp }},{{ item.precio_tg }})" role="button" class="btn btn-primary" data-toggle="tooltip" title="Agregar Producto" ><i class="glyphicon glyphicon-plus"></i></a></td>
+            </tr>    
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>   
+  </div>
+</div>
+
+<div id="contenedor_cotizacion">
+  <div class="row">
+    <div class="col-md-12">
+    {% csrf_token %} 
+      <div class="box">
+        
+        <div class="box-body">
+          <table id="list_cotizacion" class="table table-bordered table-striped dt-responsive ">
+            <thead>
+              <tr>
+                <th style="width: 10px">#</th>
+                <th>Producto</th>
+                <th>Talla</th>
+                <th>Cantidad</th>
+                <th>Ganancia</th>
+                <th>Precio Unitario</th>
+                <th>Precio Total</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            {% csrf_token %}  
+            <tbody>
+            </tbody>     
+          </table>
+        </div>
+      </div>     
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div id = "div_total">
+        <label id="total_label">Total: </label> 
+        <input type="number" step="any" id="total_cotizacion" value="0" readonly="readonly">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div id="boton_cotizacion">
+        <a style="margin-top:10px;" href="#Modal_observaciones" id= "btnSaveObservacion" role="button" data-toggle="modal" class="btn btn-success"><i class="fa fa-eye"></i>  Agregar Observación </a>
+        <button style="margin-top:10px;" id= "btnSavePrice" value="submit" onclick="guardar_cotizacion()" type="button" role="button" class="btn btn-primary" data-toggle="tooltip" title="Crear Cotizacion" disabled><i class="fa fa-check"></i> Guardar Cotización </button>
+      </div>
+    </div>
+  </div>  
+</div>
+
+
+{% endblock content %}
+
+{% block extrajs %}
+<script type="text/javascript" src="{% static '/static/plugins//select2/select2.full.min.js' %}"></script>
+<script type="text/javascript" src="{% static '/static/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" src="{% static '/static/plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+
+
+<script type="text/javascript" src="{% static '/static/js/dataTables.responsive.js' %}"></script>
+<script type="text/javascript" src="{% static '/static/js/dataTables.tableTools.js' %}"></script>
+
+<script type="text/javascript" src="{% static '/static/js/jquery.form.min.js' %}"></script>
+<script type="text/javascript" src="{% static '/static/js/custom.js' %}"></script>
+<script type="text/javascript" src="{% static '/static/js/demo.js' %}"></script>
+<script type="text/javascript">
+   $(".js-example-basic-single").select2();
+    
+</script>
+
+{% endblock extrajs %}

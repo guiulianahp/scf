@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+  {% load staticfiles %}
+  {% block extracss %}
+  {% endblock extracss %}
+
+{% block content %}
+
+	<div class="col-md-8" id="tabla_cotizacion"> <!--Tabla productos seleccionados -->
+		<!--<div class="box box-default">
+			<div class="box-header with-border">
+	            <h3 class="box-title" style="font-weight: bold;"> Cliente: </h3>
+	            <h3 class="box-title"> {{clients.nombre}}</h3>
+	        </div>
+	        <div class="table-responsive">
+	        	<table class="table">
+	        		<tbody>
+	        			<tr>
+	        				<th>Rif: </th>
+	        				<td>{{clients.rif}}</td>
+	        			</tr>
+	        			<tr>
+	        				<th>Fecha: </th>
+	        				<td>{{date}}</td>
+	        			</tr>
+	        			<tr>
+	        				<th>Telefono: </th>
+	        				<td>{{clients.telefono}}</td>
+	        			</tr>
+	        			<tr>
+	        				<th>Correo: </th>
+	        				<td>{{clients.correo}}</td>
+	        			</tr>
+	        		</tbody>
+	        	</table>
+	        </div>
+	    </div> -->
+		<form action="#" method="get" class="sidebar-form">
+	        <div class="input-group">
+	          <input type="text" name="q" class="form-control" placeholder="Buscar Cliente...">
+	              <span class="input-group-btn">
+	                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+	                </button>
+	              </span>
+	        </div>
+	     </form>
+		
+		<!--
+		<div id=""class="">
+			
+			<table id="list_cotizacion" class="table table-striped" cellspacing="0" width="100%">
+		        <thead>
+		          <tr>
+		            <th style="width: 10px">#</th>
+		            <th> Producto </th>
+		            <th> Talla </th>
+		            <th> Cantidad </th>
+		            <th> Ganancia </th>
+		            <th> Precio Unitario </th>
+		            <th> Precio Total </th>
+		            <th> Acción </th>
+		          </tr>
+		        </thead>
+		        {% csrf_token %}
+  			</table> 
+  		</div>
+  		<br>
+
+  		<div style = "float:right;">
+  			<label id="total_label">Total: </label> 
+  			<input style="width:100px" type="number" id="total_cotizacion" value="0" readonly="readonly">
+  			</br>
+			<button style="margin-top:10px;" id= "btnSavePrice" value="submit" onclick="guardar_cotizacion({{clients.id}})" type="button" role="button" class="btn btn-primary" data-toggle="tooltip" title="Crear Cotizacion" disabled><i class="fa fa-check"></i> Listar Cotizacion </button>
+		</div>
+		-->
+	</div>
+
+	<div class="col-md-4" id="tabla_producto"> <!-- Tabla listado de productos -->
+		<div class="box-header"> <h3 class="box-title">Productos Detalle</h3></div><!-- /.box-header -->
+		<div id="" class="">
+
+			<table id="list_product" class="table table-striped" cellspacing="0" width="100%">
+		        <thead>
+		          <tr>
+		            <th style="width: 10px">#</th>
+		            <th> Descripcion </th>
+		            <th> </th>
+		          </tr>
+		        </thead>
+				<tbody>
+					{% for item in list_product %}
+		           
+		            <tr id="{{item.id}}">
+		            	<td>{{ item.id }}</td>
+		                <td>{{ item.descripcion}}</td>
+		                <td><a href="#" onclick="llenar_tabla({{item.id}},'{{item.descripcion}}',{{item.precio_tp}},{{item.precio_tg}})" role="button" class="btn btn-primary" data-toggle="tooltip" title="Agregar Producto" ><i class="glyphicon glyphicon-plus"></i></a></td>
+		            </tr>
+		            
+		            {% endfor %}
+		        </tbody>
+			</table>
+		</div>
+	</div>
+
+
+
+{% endblock content %}
+
+{% block extrajs %}
+  
+  <script type="text/javascript" src="{% static '/static/js/demo.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/jquery.form.min.js' %}"></script>
+{% endblock extrajs %}

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+  {% load staticfiles %}
+  {% block extracss %}
+    
+  {% endblock extracss %}
+
+
+{% block content %}
+
+<div id="Modal" class="modal fade" tabindex="-1" role"dialog" aria-labeledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="myModalLabel"> Eliminar Producto </h3>
+      </div>
+
+      <div class="modal-body">
+       <p>¿Realmente desea eliminar el producto <span id="modal_name"></span>?</p>
+      </div>
+
+      <div class="modal-footer">
+        <form method="post" id="frmEliminar"> {% csrf_token %}          
+          <input type="hidden" id="modal_id" name="input_id">
+          <button class="btn" data-dismiss="modal" aria-hidden="true"> Cerrar </button>
+          <button type="submit" class="btn btn-danger"> Eliminar </button> 
+        </form> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<a href="{% url 'vista_agregar_producto' %}" role="button" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Nuevo Producto</a><br><br>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+        <div class="box-header">
+          <h3 class="box-title"> Listado de Productos </h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <table id="example" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Producto</th>
+                <th>Descripción</th>
+                <th>Precio talla (S - M - L)</th>
+                <th>Precio talla (XL)</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in resultado %}
+                <tr id="{{item.id}}">
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.nombre }}</td>
+                  <td>{{ item.descripcion }}</td>
+                  <td>{{ item.precio_tp }}</td>
+                  <td>{{ item.precio_tg }}</td>
+                  <td><a href="/edit/producto/{{item.id}}/" class="btn  btn-warning"><i class="fa fa-pencil-square-o"></i></a>
+                  <a href="#Modal" role="button" class="btn btn-danger delete" data-toggle="modal" id="{{item.id}}" data-name="{{item.nombre}}"><i class="fa fa-trash"></i></a></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock content %}
+
+{% block extrajs %}
+  <script type="text/javascript" src="{% static '/static/js/demo.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/custom.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/jquery.form.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/demo.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/custom.js' %}"></script>
+{% endblock extrajs %}

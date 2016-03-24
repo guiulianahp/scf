@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+  {% load staticfiles %}
+  {% block extracss %}
+    
+  {% endblock extracss %}
+
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title"><i class="fa fa-globe"></i> Diseña2Guayana, C.A - Productos<h3>
+          <span  style="font-size:16px; float:right"> Fecha: 
+            <script type="text/javascript">
+              var date = new Date();
+              var month = new Array(7);
+              month[0] = "Enero";
+              month[1] = "Febrero";
+              month[2] = "Marzo";
+              month[3] = "Abril";
+              month[4] = "Mayo";
+              month[5] = "Junio";
+              month[6] = "Julio";
+              month[7] = "Agosto";
+              month[8] = "Septiembre";
+              month[9] = "Octubre";
+              month[10] = "Noviembre";
+              month[11] = "Diciembre";
+              var year = date.getYear();
+              if (year < 2000) { year+=1900; }
+              document.write(month[date.getMonth()] + " " + date.getDate() + ", " + year);
+            </script>
+          </span>    
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <table id="example" class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th>Item</th>
+            <th>Producto</th>
+            <th>Descripción</th>
+            <th>Precio talla (S - M - L)</th>
+            <th>Precio talla (XL)</th>
+          </tr>
+          </thead>
+          <tbody>
+              {% for item in resultado %}
+                <tr>
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.nombre }}</td>
+                  <td>{{ item.descripcion }}</td>
+                  <td>{{ item.precio_tp }}</td>
+                  <td>{{ item.precio_tg }}</td>
+                  
+                </tr>
+              {% endfor %}
+              </tbody>
+              
+            </tbody>
+        </table>
+      </div>
+    </div>  
+  </div>
+</div> 
+
+</section>
+{% endblock content %}
+
+{% block extrajs %}
+  <script type="text/javascript" src="{% static '/static/js/demo.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/custom.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/jquery.form.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/demo.js' %}"></script>
+  <script type="text/javascript" src="{% static '/static/js/custom.js' %}"></script>
+{% endblock extrajs %}
+
+  
